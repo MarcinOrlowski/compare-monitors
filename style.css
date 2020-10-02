@@ -1,0 +1,12 @@
+body {
+	background-color: #282828;
+	color: #e0b595;
+}
+
+.flex-container {
+	display: flex;
+}
+
+a {
+	color: white;
+}

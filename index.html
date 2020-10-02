@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="compare.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+<div style="display: flex;">
+	<div style="flex: 2;">
+		<select id="type">
+			<option value="display">Display</option>
+			<option value="resolution">Resolution</option>
+		</select>
+		<button id="all_toggle" href="#">+/-</button>
+		<button id="all_off" href="#">-</button>
+		<button id="all_on" href="#">+</button>
+		<br/>
+		<div id="labels"></div>
+		<div>
+			<img src="empty.png" id="thumbnail">
+		</div>
+	</div>
+	<div style="flex: 7;">
+		<div id="gfx" style="position: relative; z-index: -1;"></div>
+	</div>
+</div>
+<div id="gfx_ratio">Scale ratio: ???</div>
+</body>
+
+</html>
