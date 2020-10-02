@@ -16,10 +16,11 @@ you need to add specitfication of the displays you are comparing by directly edi
     },
 ```
 
-where
+where fields are:
+
 * `label` is any string you want to be used as display label (ensure it's unique though),
 * `model` is display model ID from [www.displayspecifications.com](https://www.displayspecifications.com/) site I was using,
-* `display` specifies `w`idth and `h`eight (in my case in milimeters, but units are irrelevant really) of the display,
+* `display` specifies `w`idth and `h`eight of the display. The units are milimeters, but units are in fact quite irrelevant and can be anything you want. Just keep it the same for each monitor othwerwise comparision would have no much sense.
 * `resolution` specifies `w`idth, `h`eight (in pixles) and refresh `freq`uency of the display.
 
 Once you set it all up, just use any web browser and open `index.html` file and that's it. You do **NOT** need any webserver
