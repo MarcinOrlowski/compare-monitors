@@ -141,7 +141,7 @@ function createOverlays(specs_key) {
     }
 
 	// sort by label, but as we have id based on label, we sort by id for the same effect.
-	let monitors = new Map([...monitors_tmp.entries()].sort());
+	monitors = new Map([...monitors_tmp.entries()].sort());
 
     $("#labels").empty();
     $("#gfx").empty();
@@ -181,7 +181,7 @@ function createOverlays(specs_key) {
                 <label for="${id}">
                     ${monitor["label"]}: ${specs}
                     <a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
-                    <a href="#" onclick="showThumbnail("${id}");">Thumb</a>
+                    <a href="#" onclick="showThumbnail('${id}');">Thumb</a>
                 </label>
             </div>`;
         $("#labels").append(label_div);
@@ -198,7 +198,9 @@ function createOverlays(specs_key) {
 }
 
 function showThumbnail(id) {
+alert(id);
     let monitor = monitors.get(id);
+	alert(monitor);
     let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
     $("#thumbnail").attr("src", url);
 }
