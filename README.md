@@ -19,6 +19,7 @@ you need to add specitfication of the displays you are comparing by directly edi
         model: "b96b14f5",
         display: {w: 713, h: 415},
         resolution: {w: 3840, h: 2160, freq: 60},
+        checked: true
     },
 ```
 
@@ -28,6 +29,7 @@ where fields are:
 * `model` is display model ID from [www.displayspecifications.com](https://www.displayspecifications.com/) site I was using. It is mostly used to construct reference link (if you need more specs) and to get the monitor image thumbnail,
 * `display` specifies `w`idth and `h`eight of the display. The units are milimeters, but units are in fact quite irrelevant and can be anything you want. Just keep it the same for each monitor othwerwise comparision would have no much sense.
 * `resolution` specifies `w`idth, `h`eight (in pixles) and refresh `freq`uency of the display.
+* `checked` determines if monitor is enabled `true` (default)` or excluded from visual comparision (`false`).
 
 Once you set it all up, just use any web browser and open `index.html` file and that's it. You do **NOT** need any webserver
 installed nor running. It's all local. Just type `file://<PATH TO WHERE YOU GOT THESE FILES STORED>/index.html` in your 
