@@ -1,4 +1,4 @@
-This is bunch of JS scripts I wrote to help me what type of monitor I should get next.
+This is bunch of JS scripts I wrote to help me decide what type of monitor I should get next.
 I was mostly concerned about phisical screen dimensions as well as display resolution
 and all this is can be visually compared.
 
@@ -19,7 +19,7 @@ you need to add specitfication of the displays you are comparing by directly edi
 where fields are:
 
 * `label` is any string you want to be used as display label (ensure it's unique though),
-* `model` is display model ID from [www.displayspecifications.com](https://www.displayspecifications.com/) site I was using,
+* `model` is display model ID from [www.displayspecifications.com](https://www.displayspecifications.com/) site I was using. It is mostly used to construct reference link (if you need more specs) and to get the monitor image thumbnail,
 * `display` specifies `w`idth and `h`eight of the display. The units are milimeters, but units are in fact quite irrelevant and can be anything you want. Just keep it the same for each monitor othwerwise comparision would have no much sense.
 * `resolution` specifies `w`idth, `h`eight (in pixles) and refresh `freq`uency of the display.
 
