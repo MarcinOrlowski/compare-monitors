@@ -1,6 +1,10 @@
+# What is it? #
+
 This is bunch of JS scripts I wrote to help me decide what type of monitor I should get next.
 I was mostly concerned about phisical screen dimensions as well as display resolution
 and all this is can be visually compared.
+
+# Usage #
 
 Note, this is tool I wrote just for my own purpse, so no fancy configs, nice looking
 UI, sophisticated error handling nor other usual stuff. If you want to play with it,
@@ -26,6 +30,8 @@ where fields are:
 Once you set it all up, just use any web browser and open `index.html` file and that's it. You do **NOT** need any webserver
 installed nor running. It's all local. Just type `file://<PATH TO WHERE YOU GOT THESE FILES STORED>/index.html` in your 
 browser address bar and you should be good.
+
+# License #
 
  * Written and copyrighted &copy;2020 by Marcin Orlowski <mail (#) marcinorlowski (.) com>
  * This application is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
