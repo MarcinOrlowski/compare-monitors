@@ -4,6 +4,8 @@ This is bunch of JS scripts I wrote to help me decide what type of monitor I sho
 I was mostly concerned about phisical screen dimensions as well as display resolution
 and all this is can be visually compared.
 
+![Example](img/screenshot.png)
+
 # Usage #
 
 Note, this is tool I wrote just for my own purpse, so no fancy configs, nice looking
