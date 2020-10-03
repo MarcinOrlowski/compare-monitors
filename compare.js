@@ -6,7 +6,7 @@ const colors = [
     "#67342f",
     "#19dc19",
     "#881616",
-    "#e2279b",
+    "#e2279b"
 ];
 
 let monitors_src = [
@@ -47,7 +47,7 @@ let monitors_src = [
         model: "b96b14f5",
         display: {w: 713, h: 415},
         resolution: {w: 3840, h: 2160, freq: 60},
-    },
+    }
 ];
 
 let monitors = new Map();
