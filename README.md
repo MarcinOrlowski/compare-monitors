@@ -27,3 +27,6 @@ Once you set it all up, just use any web browser and open `index.html` file and 
 installed nor running. It's all local. Just type `file://<PATH TO WHERE YOU GOT THESE FILES STORED>/index.html` in your 
 browser address bar and you should be good.
 
+ * Written and copyrighted &copy;2020 by Marcin Orlowski <mail (#) marcinorlowski (.) com>
+ * This application is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
