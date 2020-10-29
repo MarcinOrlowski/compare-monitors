@@ -11,7 +11,7 @@ and all this is can be visually compared.
 Note, this is tool I wrote just for my own purpse, so no fancy configs, nice looking
 UI, sophisticated error handling nor other usual stuff. If you want to play with it,
 you need to add specitfication of the displays you are comparing by directly editing
-`compare.js` script. The `monitors_src` array holds monitors as separate objects, i.e.
+`monitors.js` script. The `monitors_src` array holds monitors as separate objects, i.e.
 
 ```json
     {
