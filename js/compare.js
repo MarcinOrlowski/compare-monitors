@@ -1,12 +1,21 @@
+/*
+** Compare Monitors utility
+**
+** @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
+** @copyright 2020-2021 Marcin Orlowski
+** @license   http://www.opensource.org/licenses/mit-license.php MIT
+** @link      https://github.com/MarcinOrlowski/compare-monitors
+*/
+
 const colors = [
-    "#fbc02d",
-    "#512da8",
-    "#8bc34a",
-    "#166a88",
-    "#67342f",
-    "#19dc19",
-    "#881616",
-    "#e2279b"
+	"#fbc02d",
+	"#512da8",
+	"#8bc34a",
+	"#166a88",
+	"#67342f",
+	"#19dc19",
+	"#881616",
+	"#e2279b"
 ];
 
 let monitors = new Map();
@@ -22,13 +31,13 @@ let monitors = new Map();
  */
 function getScaleRatio(key) {
 	let max_width = 0;
-    for (let index = 0; index < monitors_src.length; index++) {
-        let monitor = monitors_src[index];
+	for (let index = 0; index < monitors_src.length; index++) {
+		let monitor = monitors_src[index];
 		if (monitor[key]["w"] > max_width) {
 			max_width = monitor[key]["w"];
 		}
-    }
- 
+	}
+
 	let div_width = Math.round($("#gfx").width());
 	let ratio = Math.round((max_width / div_width) + 0.5);
 	if (ratio < 1) {
@@ -47,121 +56,121 @@ function getScaleRatio(key) {
  * @returns {number}
  */
 function widthComparator(key, a, b) {
-    // Use toUpperCase() to ignore character casing
-    let comparison = 0;
-    if (a[key]["w"] < b[key]["w"]) {
-        comparison = 1;
-    } else if (a[key]["w"] > b[key]["w"]) {
-        comparison = -1;
-    }
-    return comparison;
+	// Use toUpperCase() to ignore character casing
+	let comparison = 0;
+	if (a[key]["w"] < b[key]["w"]) {
+		comparison = 1;
+	} else if (a[key]["w"] > b[key]["w"]) {
+		comparison = -1;
+	}
+	return comparison;
 }
 
 function displayWidthComparator(a, b) {
-    return widthComparator("display", a, b);
+	return widthComparator("display", a, b);
 }
 
 function resolutionWidthComparator(a, b) {
-    return widthComparator("resolution", a, b);
+	return widthComparator("resolution", a, b);
 }
 
 function generateId(monitor) {
-    return monitor["label"].toLowerCase().replace(/[\W_]+/g, "_");
+	return monitor["label"].toLowerCase().replace(/[\W_]+/g, "_");
 }
 
 function createOverlays(specs_key) {
 	// sort by display specs
-    switch (specs_key) {
-        case "display":
-            monitors_src.sort(displayWidthComparator);
-            break;
+	switch (specs_key) {
+		case "display":
+			monitors_src.sort(displayWidthComparator);
+			break;
 
-        case "resolution":
-            monitors_src.sort(resolutionWidthComparator);
-            break;
-    }
+		case "resolution":
+			monitors_src.sort(resolutionWidthComparator);
+			break;
+	}
 
 	let gfx_divider = getScaleRatio(specs_key);
 
 	$("#gfx_ratio").html(`Scale ratio: <b>1:${gfx_divider}</b>`);
 
-    // generate Ids
-    monitors_tmp = new Map();
-    for (let index = 0; index < monitors_src.length; index++) {
-        let monitor = monitors_src[index];
+	// generate Ids
+	monitors_tmp = new Map();
+	for (let index = 0; index < monitors_src.length; index++) {
+		let monitor = monitors_src[index];
 		monitor["z-index"] = index;
 
 		if (!monitor.hasOwnProperty("checked")) {
 			monitor["checked"] = true;
 		}
 
-        let id = generateId(monitor);
-        monitors_tmp.set(id, monitor);
-    }
+		let id = generateId(monitor);
+		monitors_tmp.set(id, monitor);
+	}
 
 	// sort by label, but as we have id based on label, we sort by id for the same effect.
 	monitors = new Map([...monitors_tmp.entries()].sort());
 
-    $("#labels").empty();
-    $("#gfx").empty();
+	$("#labels").empty();
+	$("#gfx").empty();
 
-    for (let [id, monitor] of monitors) {
-        let bg_color = colors[monitor["z-index"] % colors.length] + "aa";
-        let border_color = colors[monitor["z-index"] % colors.length] + "22";
-        border_color = "#ff0000";
-        let css = [
-            "position: absolute",
-            "z-index: " + monitor["z-index"],
-            "background-color: " + bg_color,
-            "border: 4px solid " + border_color,
-            "width: " + monitor[specs_key]["w"] / gfx_divider + "px",
-            "height: " + monitor[specs_key]["h"] / gfx_divider + "px",
-        ].join("; ") + ";";
+	for (let [id, monitor] of monitors) {
+		let bg_color = colors[monitor["z-index"] % colors.length] + "aa";
+		let border_color = colors[monitor["z-index"] % colors.length] + "22";
+		border_color = "#ff0000";
+		let css = [
+			"position: absolute",
+			"z-index: " + monitor["z-index"],
+			"background-color: " + bg_color,
+			"border: 4px solid " + border_color,
+			"width: " + monitor[specs_key]["w"] / gfx_divider + "px",
+			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
+		].join("; ") + ";";
 
-        let gfx_div = `<div id="gfx_${id}" style="${css}"></div>`;
+		let gfx_div = `<div id="gfx_${id}" style="${css}"></div>`;
 		if (monitor["checked"]) {
-        	$("#gfx").append(gfx_div);
+			$("#gfx").append(gfx_div);
 		}
 
-        let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
-        switch (specs_key) {
-            case "display":
-                specs += "mm";
-                break;
-            case "resolution":
-                specs += `px @${monitor[specs_key]["freq"]}`;
-                break;
-        }
+		let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
+		switch (specs_key) {
+			case "display":
+				specs += "mm";
+				break;
+			case "resolution":
+				specs += `px @${monitor[specs_key]["freq"]}`;
+				break;
+		}
 
 		let checked = monitor["checked"] ? 'checked="checked"' : "";
-        let label_div = `
-                <div style="background-color: ${bg_color}">
-                <input type="checkbox" id="${id}" ${checked}>
-                <label for="${id}">
-                    ${monitor["label"]}: ${specs}
-                    <a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
-                    <a href="#" onclick="showThumbnail('${id}');">Thumb</a>
-                </label>
-            </div>`;
-        $("#labels").append(label_div);
+		let label_div = `
+				<div style="background-color: ${bg_color}">
+				<input type="checkbox" id="${id}" ${checked}>
+				<label for="${id}">
+					${monitor["label"]}: ${specs}
+					<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
+					<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
+				</label>
+			</div>`;
+		$("#labels").append(label_div);
 
 		// checkbox state change handling
-        $(`#${id}`).change(function () {
-            let id = $(this).attr("id");
+		$(`#${id}`).change(function () {
+			let id = $(this).attr("id");
 			let monitor = monitors.get(id);
 			monitor["checked"] = !monitor["checked"];
 			monitors.set(id, monitor);
-            $(`#gfx_${id}`).toggle();
-        });
-    }
+			$(`#gfx_${id}`).toggle();
+		});
+	}
 }
 
 function showThumbnail(id) {
 alert(id);
-    let monitor = monitors.get(id);
+	let monitor = monitors.get(id);
 	alert(monitor);
-    let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
-    $("#thumbnail").attr("src", url);
+	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
+	$("#thumbnail").attr("src", url);
 }
 
 $(window).on("load", function () {
@@ -175,34 +184,35 @@ $(window).on("load", function () {
 		});
 
 		// redraw on graphs type change
-        $("#type").change(function () {
-            createOverlays(this.value);
-        });
+		$("#type").change(function () {
+			createOverlays(this.value);
+		});
 
 		// toggle/all on/all off switches
-        $("#all_toggle").on("click", function () {
-            $("#labels input[type=checkbox]").each(function () {
-                $(this).prop("checked", !($(this).prop("checked") == true));
-                $(this).trigger("change");
-            });
-        });
+		$("#all_toggle").on("click", function () {
+			$("#labels input[type=checkbox]").each(function () {
+				$(this).prop("checked", !($(this).prop("checked") == true));
+				$(this).trigger("change");
+			});
+		});
 
-        $("#all_off").on("click", function () {
-            $("#labels input[type=checkbox]").each(function () {
-                if ($(this).prop("checked")) {
-                    $(this).prop("checked", false);
-                    $(this).trigger("change");
-                }
-            });
-        });
+		$("#all_off").on("click", function () {
+			$("#labels input[type=checkbox]").each(function () {
+				if ($(this).prop("checked")) {
+					$(this).prop("checked", false);
+					$(this).trigger("change");
+				}
+			});
+		});
 
-        $("#all_on").on("click", function () {
-            $("#labels input[type=checkbox]").each(function () {
-                if (!$(this).prop("checked")) {
-                    $(this).prop("checked", true);
-                    $(this).trigger("change");
-                }
-            });
-        });
-    }
+		$("#all_on").on("click", function () {
+			$("#labels input[type=checkbox]").each(function () {
+				if (!$(this).prop("checked")) {
+					$(this).prop("checked", true);
+					$(this).trigger("change");
+				}
+			});
+		});
+	}
 );
+

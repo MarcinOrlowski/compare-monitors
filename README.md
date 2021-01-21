@@ -37,6 +37,6 @@ browser address bar and you should be good.
 
 # License #
 
- * Written and copyrighted &copy;2020 by Marcin Orlowski <mail (#) marcinorlowski (.) com>
+ * Written and copyrighted &copy;2020-2021 by Marcin Orlowski <mail (#) marcinorlowski (.) com>
  * This application is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
