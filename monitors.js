@@ -15,10 +15,17 @@ let monitors_src = [
 		resolution: {w: 3840, h: 1600, freq: 60},
 	},
 	{
+		label: "Dell U4021QW",
+		model: "81f222f6",
+		display: {w: 947, h: 457},
+		resolution: {w: 5120, h:2160, freq: 60},
+	},
+	{
 		label: "LG 38WN75C",
 		model: "74321f28",
 		display: {w: 879, h: 366},
 		resolution: {w: 3840, h: 1600, freq: 75},
+		checked: false,
 	},
 	{
 		label: "LG 34WK95U (5K2K)",
@@ -39,6 +46,7 @@ let monitors_src = [
 		model: "5c6f1324",
 		display: {w: 698, h: 392},
 		resolution: {w: 3840, h: 2160, freq: 60},
+		checked: false,
 	},
 	{
 		label: "Dell U3219Q",
