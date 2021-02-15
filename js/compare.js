@@ -166,7 +166,6 @@ function createOverlays(specs_key) {
 }
 
 function showThumbnail(id) {
-alert(id);
 	let monitor = monitors.get(id);
 	alert(monitor);
 	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
