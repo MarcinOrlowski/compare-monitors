@@ -10,3 +10,24 @@ body {
 a {
 	color: white;
 }
+
+.label {
+	padding: 4px;
+	background: black;
+	color: white;
+}
+
+.right {
+	position: absolute;
+	right: 0;
+}
+
+.top {
+	position: absolute;
+	top: 0;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+}

@@ -114,6 +114,13 @@ function createOverlays(specs_key) {
 	$("#labels").empty();
 	$("#gfx").empty();
 
+	// Enumerate monitors
+	let idx = 1;
+	for (let [id, monitor] of monitors) {
+		monitor["index"] = idx++;
+		monitors[id] = monitor;
+	}
+
 	for (let [id, monitor] of monitors) {
 		let bg_color = colors[monitor["z-index"] % colors.length] + "aa";
 		let border_color = colors[monitor["z-index"] % colors.length] + "22";
@@ -127,7 +134,10 @@ function createOverlays(specs_key) {
 			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
 		].join("; ") + ";";
 
-		let gfx_div = `<div id="gfx_${id}" style="${css}"></div>`;
+		let gfx_div = `<div id="gfx_${id}" style="${css}">
+			<div class="label top right">${monitor["index"]}</div>
+			<div class="label bottom right">${monitor["index"]}</div>
+		</div>`;
 		$("#gfx").append(gfx_div);
 		$(`#gfx_${id}`).toggle(monitor["checked"]);
 
@@ -146,7 +156,7 @@ function createOverlays(specs_key) {
 				<div style="background-color: ${bg_color}">
 				<input type="checkbox" id="${id}" ${checked}>
 				<label for="${id}">
-					${monitor["label"]}
+					${monitor["index"]}: ${monitor["label"]}
 						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
 						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
 					<br />${specs}
