@@ -9,7 +9,7 @@
 
 let monitors_src = [
 	{
-		label: "Dell U4021QW (5K2K)",
+		label: "Dell U4021QW",
 		// displayspecifications.com' model ID
 		model: "81f222f6",
 		// **Display** width/height (w/o stand) in millimeters (round up)
@@ -34,14 +34,14 @@ let monitors_src = [
 		checked: false,
 	},
 	{
-		label: "LG 34WK95U (5K2K)",
+		label: "LG 34WK95U",
 		model: "65301459",
 		display: {w: 794, h: 340},
 		resolution: {w: 5120, h: 2160, freq: 60},
 		checked: false,
 	},
 	{
-		label: "MSI PS341WU HDR (5K2K)",
+		label: "MSI PS341WU HDR",
 		model: "ac6c1b53",
 		display: {w: 799, h: 336},
 		resolution: {w: 5120, h: 2160, freq: 60},
