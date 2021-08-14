@@ -9,6 +9,15 @@
 
 let monitors_src = [
 	{
+		label: "Dell U4021QW",
+		// displayspecifications.com' model ID
+		model: "81f222f6",
+		// **Display** width/height (w/o stand) in millimeters (round up)
+		display: {w: 947, h: 419},
+		// Screen native resolution (in pixels) and refresh frequency (in Hz)
+		resolution: {w: 5120, h: 2160, freq: 60},
+	},
+	{
 		label: "Dell U3818DW",
 		model: "1e7dca5",
 		display: {w: 880, h: 367},
@@ -18,7 +27,7 @@ let monitors_src = [
 		label: "Dell U4021QW",
 		model: "81f222f6",
 		display: {w: 947, h: 457},
-		resolution: {w: 5120, h:2160, freq: 60},
+		resolution: {w: 5120, h: 2160, freq: 60},
 	},
 	{
 		label: "LG 38WN75C",
