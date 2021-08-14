@@ -147,9 +147,10 @@ function createOverlays(specs_key) {
 				<div style="background-color: ${bg_color}">
 				<input type="checkbox" id="${id}" ${checked}>
 				<label for="${id}">
-					${monitor["label"]}: ${specs}
-					<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
-					<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
+					${monitor["label"]}
+						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
+						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
+					<br />${specs}
 				</label>
 			</div>`;
 		$("#labels").append(label_div);
