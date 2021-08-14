@@ -68,5 +68,13 @@ let monitors_src = [
 		resolution: {w: 3840, h: 2160, freq: 75},
 		checked: false,
 	},
+	{
+		label: "Dell U2421DC",
+		model: "77151d40",
+		display: {w: 527, h: 296},
+		resolution: {w: 2560, h: 1440, freq: 60},
+		checked: false,
+	},
+
 ];
 
