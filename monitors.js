@@ -14,7 +14,7 @@ let monitors_src = [
 		model: "81f222f6",
 		// **Display** width/height (w/o stand) in millimeters (round up)
 		display: {w: 947, h: 419},
-		// Screen native resolution (in pixels) and refresh frequency (in Hz)
+		// Screen native resolution (in pixels) and max refresh frequency (in Hz)
 		resolution: {w: 5120, h: 2160, freq: 60},
 	},
 	{
@@ -62,6 +62,12 @@ let monitors_src = [
 		model: "b96b14f5",
 		display: {w: 713, h: 415},
 		resolution: {w: 3840, h: 2160, freq: 60},
-	}
+	},
+	{
+		label: "Dell U2720Q",
+		model: "11f01cd5",
+		display: {w: 611, h: 356},
+		resolution: {w: 3840, h: 2160, freq: 75},
+	},
 ];
 
