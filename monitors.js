@@ -9,25 +9,22 @@
 
 let monitors_src = [
 	{
-		label: "Dell U4021QW",
+		label: "Dell U4021QW (5K2K)",
 		// displayspecifications.com' model ID
 		model: "81f222f6",
 		// **Display** width/height (w/o stand) in millimeters (round up)
 		display: {w: 947, h: 419},
 		// Screen native resolution (in pixels) and max refresh frequency (in Hz)
 		resolution: {w: 5120, h: 2160, freq: 60},
+		// Shall this monitor be listed as "checked"?
+		checked: true,
 	},
 	{
 		label: "Dell U3818DW",
 		model: "1e7dca5",
 		display: {w: 880, h: 367},
 		resolution: {w: 3840, h: 1600, freq: 60},
-	},
-	{
-		label: "Dell U4021QW",
-		model: "81f222f6",
-		display: {w: 947, h: 457},
-		resolution: {w: 5120, h: 2160, freq: 60},
+		checked: true,
 	},
 	{
 		label: "LG 38WN75C",
@@ -62,12 +59,14 @@ let monitors_src = [
 		model: "b96b14f5",
 		display: {w: 713, h: 415},
 		resolution: {w: 3840, h: 2160, freq: 60},
+		checked: true,
 	},
 	{
 		label: "Dell U2720Q",
 		model: "11f01cd5",
 		display: {w: 611, h: 356},
 		resolution: {w: 3840, h: 2160, freq: 75},
+		checked: false,
 	},
 ];
 
