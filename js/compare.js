@@ -20,6 +20,9 @@ const colors = [
 
 let monitors = new Map();
 
+// Set to FALSE to show monitor index instead of label
+let show_label = true;
+
 /**
  * Calculates overlay scale ratio, depending on width of container
  * div and max width of the element to be drawn. Returns X as in
@@ -134,11 +137,14 @@ function createOverlays(specs_key) {
 			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
 		].join("; ") + ";";
 
+		let label = monitor[show_label ? "label" : "index"];
 		let gfx_div = `<div id="gfx_${id}" style="${css}">
-			<div class="label top right">${monitor["index"]}</div>
-			<div class="label bottom right">${monitor["index"]}</div>
+			<div id="gfx_${id}_label_top" class="label top right">${label}</div>
 		</div>`;
+
 		$("#gfx").append(gfx_div);
+		let top_pos = (monitor['index'] - 1) * 30;
+		$(`#gfx_${id}_label_top`).css({"top": top_pos});
 		$(`#gfx_${id}`).toggle(monitor["checked"]);
 
 		let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
@@ -152,11 +158,12 @@ function createOverlays(specs_key) {
 		}
 
 		let checked = monitor["checked"] ? 'checked="checked"' : "";
+		let itemIndex = show_label ? '' : `${monitor["index"]}: `;
 		let label_div = `
 				<div style="background-color: ${bg_color}">
 				<input type="checkbox" id="${id}" ${checked}>
 				<label for="${id}">
-					${monitor["index"]}: ${monitor["label"]}
+					${itemIndex}${monitor["label"]}
 						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
 						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
 					<br />${specs}

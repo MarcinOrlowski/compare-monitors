@@ -3,6 +3,12 @@ body {
 	color: #e0b595;
 }
 
+#gfx {
+	position: relative;
+	z-index: -1;
+	padding: 10px;
+}
+
 .flex-container {
 	display: flex;
 }
@@ -13,7 +19,7 @@ a {
 
 .label {
 	padding: 4px;
-	background: black;
+	background: #000000AA;
 	color: white;
 }
 
