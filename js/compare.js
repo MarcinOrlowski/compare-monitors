@@ -128,9 +128,8 @@ function createOverlays(specs_key) {
 		].join("; ") + ";";
 
 		let gfx_div = `<div id="gfx_${id}" style="${css}"></div>`;
-		if (monitor["checked"]) {
-			$("#gfx").append(gfx_div);
-		}
+		$("#gfx").append(gfx_div);
+		$(`#gfx_${id}`).toggle(monitor["checked"]);
 
 		let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
 		switch (specs_key) {
