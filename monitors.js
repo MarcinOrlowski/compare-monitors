@@ -10,13 +10,21 @@
 let monitors_src = [
 	{
 		label: "Dell U4021QW",
-		// displayspecifications.com' model ID
+		// Model ID as used in https://www.displayspecifications.com/
+		// In general it's part of the URL -> https://www.displayspecifications.com/en/model/<MODEL>
 		model: "81f222f6",
 		// **Display** width/height (w/o stand) in millimeters (round up)
 		display: {w: 947, h: 419},
 		// Screen native resolution (in pixels) and max refresh frequency (in Hz)
 		resolution: {w: 5120, h: 2160, freq: 60},
-		// Shall this monitor be listed as "checked"?
+		// Shall this monitor be listed as "enabled" on load?
+		checked: true,
+	},
+	{
+		label: "Dell U4021QW",
+		model: "81f222f6",
+		display: {w: 947, h: 419},
+		resolution: {w: 5120, h: 2160, freq: 60},
 		checked: true,
 	},
 	{
