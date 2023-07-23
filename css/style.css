@@ -3,6 +3,10 @@ body {
 	color: #e0b595;
 }
 
+#gfx_container {
+	flex: 7;
+}
+
 #gfx {
 	position: relative;
 	z-index: -1;

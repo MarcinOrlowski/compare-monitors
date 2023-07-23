@@ -36,8 +36,8 @@ let show_label = true;
  */
 function getScaleRatio(key) {
 	let max_width = 0;
-	for (let index = 0; index < monitors_src.length; index++) {
-		let monitor = monitors_src[index];
+	for (const element of monitors_src) {
+		let monitor = element;
 		if (monitor[key]["w"] > max_width) {
 			max_width = monitor[key]["w"];
 		}
@@ -100,7 +100,7 @@ function createOverlays(specs_key) {
 	$("#gfx_ratio").html(`Scale ratio: <b>1:${gfx_divider}</b>`);
 
 	// generate Ids
-	monitors_tmp = new Map();
+	let monitors_tmp = new Map();
 	for (let index = 0; index < monitors_src.length; index++) {
 		let monitor = monitors_src[index];
 		monitor["z-index"] = index;
@@ -129,12 +129,11 @@ function createOverlays(specs_key) {
 	for (let [id, monitor] of monitors) {
 		let bg_color = colors[monitor["z-index"] % colors.length] + "aa";
 		let border_color = colors[monitor["z-index"] % colors.length] + "22";
-		border_color = "#ff0000";
 		let css = [
 			"position: absolute",
 			"z-index: " + monitor["z-index"],
 			"background-color: " + bg_color,
-			"border: 4px solid " + border_color,
+			"border: 3px solid " + border_color,
 			"width: " + monitor[specs_key]["w"] / gfx_divider + "px",
 			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
 		].join("; ") + ";";
@@ -155,7 +154,7 @@ function createOverlays(specs_key) {
 				specs += "mm";
 				break;
 			case "resolution":
-				specs += `px @${monitor[specs_key]["freq"]}`;
+				specs += `px @${monitor[specs_key]["freq"]}Hz`;
 				break;
 		}
 
