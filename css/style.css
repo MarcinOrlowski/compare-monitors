@@ -37,3 +37,17 @@ a {
 	position: absolute;
 	bottom: 0;
 }
+
+#thumbnail {
+	width: 100%;
+	object-fit: contain;
+	background-color: gray;
+	/* center items */
+	display: flex;
+	justify-content: center;
+}
+
+#thumbnail_button {
+	max-width: 32px;
+	max-height: 32px;
+}

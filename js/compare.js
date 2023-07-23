@@ -185,12 +185,19 @@ function createOverlays(specs_key) {
 function showThumbnail(id) {
 	let monitor = monitors.get(id);
 	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
-	$("#thumbnail").attr("src", url);
+	$("#thumbnail_img").attr("src", url);
+	$("#thumbnail").show();
 
 	return true;
 }
 
+function hideThumbnail() {
+	$("#thumbnail").hide();
+}
+
 $(window).on("load", function () {
+		hideThumbnail();
+
 		let type = $("#type").val();
 		createOverlays(type);
 

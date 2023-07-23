@@ -22,23 +22,25 @@
 
 <body>
 <div style="display: flex;">
-	<div style="flex: 2;">
-		<select id="type">
-			<option value="display">Display</option>
-			<option value="resolution">Resolution</option>
-		</select>
-		<button id="all_toggle" href="#">+/-</button>
-		<button id="all_off" href="#">-</button>
-		<button id="all_on" href="#">+</button>
-		<br/>
-		<div id="labels"></div>
-		<div>
-			<img src="img/empty.png" id="thumbnail">
-		</div>
-	</div>
-	<div style="flex: 7;">
-		<div id="gfx"></div>
-	</div>
+    <div style="flex: 2;">
+        <select id="type">
+            <option value="display">Display</option>
+            <option value="resolution">Resolution</option>
+        </select>
+        <button id="all_toggle" href="#">+/-</button>
+        <button id="all_off" href="#">-</button>
+        <button id="all_on" href="#">+</button>
+        <br/>
+        <div id="labels"></div>
+        <div id="thumbnail">
+            <img src="img/empty.png" id="thumbnail_img" alt="Monitor"><br/>
+            <img src="img/close-circle.svg" id="thumbnail_button" alt="Close thumbnail view" id="thumbnail_close"
+                 onclick="hideThumbnail();">
+        </div>
+    </div>
+    <div id="gfx_container">
+        <div id="gfx"></div>
+    </div>
 </div>
 <div id="gfx_ratio">Scale ratio: ???</div>
 </body>
