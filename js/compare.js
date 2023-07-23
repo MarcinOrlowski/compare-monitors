@@ -138,7 +138,7 @@ function createOverlays(specs_key) {
 		].join("; ") + ";";
 
 		let label = monitor[show_label ? "label" : "index"];
-		let gfx_div = `<div id="gfx_${id}" style="${css}">
+		let gfx_div = `<div id="gfx_${id}" class="area" style="${css}">
 			<div id="gfx_${id}_label_top" class="label top right">${label}</div>
 		</div>`;
 
@@ -158,18 +158,35 @@ function createOverlays(specs_key) {
 		}
 
 		let checked = monitor["checked"] ? 'checked="checked"' : "";
-		let itemIndex = show_label ? '' : `${monitor["index"]}: `;
+		let grayscale_level = monitor["checked"] ? '0.0' : '1.0';
+		let item_index = show_label ? '' : `${monitor["index"]}: `;
+		let list_id = `list_${monitor["model"]}`;
 		let label_div = `
-				<div style="background-color: ${bg_color}">
+			<div id="${list_id}" style="background-color: ${bg_color}; filter: grayscale(${grayscale_level})">
 				<input type="checkbox" id="${id}" ${checked}>
 				<label for="${id}">
-					${itemIndex}${monitor["label"]}
+					${item_index}${monitor["label"]}
 						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
 						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
 					<br />${specs}
 				</label>
 			</div>`;
 		$("#labels").append(label_div);
+
+		// add handler reacting to hoover on the div
+		$(`#${list_id}`).on( "mouseenter", function () {
+				if (monitor["checked"]) {
+					$(`#${list_id}`).css("filter", "brightness(150%)");
+				}
+				$(`.area`).css("filter", "brightness(50%)").css("opacity", "0.5").css("filter", "grayscale(1)");
+				$(`#gfx_${id}`).css("filter", "brightness(150%)").css("opacity", "1.0").css("filter", "grayscale(0)");
+			})
+			.on( "mouseleave", function () {
+				if (monitor["checked"]) {
+					$(`#${list_id}`).css("filter", "brightness(100%)");
+				}
+				$(`.area`).css("filter", "brightness(100%)").css("opacity", "1.0").css('filter', "grayscale(0)");
+			});
 
 		// checkbox state change handling
 		$(`#${id}`).change(function () {
@@ -178,6 +195,9 @@ function createOverlays(specs_key) {
 			monitor["checked"] = !monitor["checked"];
 			monitors.set(id, monitor);
 			$(`#gfx_${id}`).toggle();
+
+			let grayscale_level = monitor["checked"] ? '0.0' : '1.0';
+			$(`#${list_id}`).css('filter', `grayscale(${grayscale_level})`);
 		});
 	}
 }
