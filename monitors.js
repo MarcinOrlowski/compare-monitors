@@ -21,6 +21,13 @@ let monitors_src = [
 		checked: true,
 	},
 	{
+		label: "BenQ PD3420Q",
+		model: "b8ce1c50",
+		display: {w: 826, h:372},
+		resolution: {w:3440, h:1440, freq: 60},
+		checked: false,
+	},
+	{
 		label: "Dell U4021QW",
 		model: "81f222f6",
 		display: {w: 947, h: 419},
