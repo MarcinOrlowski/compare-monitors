@@ -15,24 +15,32 @@ let monitors_src = [
 		model: "81f222f6",
 		// **Display** width/height (w/o stand) in millimeters (round up)
 		display: {w: 947, h: 419},
-		// Screen native resolution (in pixels) and max refresh frequency (in Hz)
+		// Screen native resolution (`w`, `h` in pixels) and max refresh `freq`uency (in Hz)
 		resolution: {w: 5120, h: 2160, freq: 60},
-		// Shall this monitor be listed as "enabled" on load?
+		// Shall this monitor be listed as "enabled" on load? (default: false)
 		checked: true,
+		// Is the monitor display curved (default: false)
+		curved: true,
+	},
+	{
+		label: "Samsung Odyssey Neo G9 Dual",
+		model: "4a8d34fb",
+		display: {w: 1394, h:392},
+		resolution: {w:7680, h:2160, freq: 240},
+		curved: true,
 	},
 	{
 		label: "BenQ PD3420Q",
 		model: "b8ce1c50",
 		display: {w: 826, h:372},
 		resolution: {w:3440, h:1440, freq: 60},
-		checked: false,
 	},
 	{
-		label: "Dell U4021QW",
-		model: "81f222f6",
-		display: {w: 947, h: 419},
-		resolution: {w: 5120, h: 2160, freq: 60},
-		checked: true,
+		label: "Dell S3221QS 4K",
+		model: "795c2136",
+		display: {w: 697, h:392},
+		resolution: {w:3840, h:2160, freq: 60},
+		curved: true,
 	},
 	{
 		label: "Dell U3818DW",
@@ -40,34 +48,31 @@ let monitors_src = [
 		display: {w: 880, h: 367},
 		resolution: {w: 3840, h: 1600, freq: 60},
 		checked: true,
+		curved: true,
 	},
 	{
 		label: "LG 38WN75C",
 		model: "74321f28",
 		display: {w: 879, h: 366},
 		resolution: {w: 3840, h: 1600, freq: 75},
-		checked: false,
 	},
 	{
-		label: "LG 34WK95U",
+		label: "LG 34WK95U 5K",
 		model: "65301459",
 		display: {w: 794, h: 340},
 		resolution: {w: 5120, h: 2160, freq: 60},
-		checked: false,
 	},
 	{
-		label: "MSI PS341WU HDR",
+		label: "MSI PS341WU HDR 5K",
 		model: "ac6c1b53",
 		display: {w: 799, h: 336},
 		resolution: {w: 5120, h: 2160, freq: 60},
-		checked: false,
 	},
 	{
 		label: "Samsung LU32J590",
 		model: "5c6f1324",
 		display: {w: 698, h: 392},
 		resolution: {w: 3840, h: 2160, freq: 60},
-		checked: false,
 	},
 	{
 		label: "Dell U3219Q",
@@ -81,14 +86,12 @@ let monitors_src = [
 		model: "11f01cd5",
 		display: {w: 611, h: 356},
 		resolution: {w: 3840, h: 2160, freq: 75},
-		checked: false,
 	},
 	{
 		label: "Dell U2421DC",
 		model: "77151d40",
 		display: {w: 527, h: 296},
 		resolution: {w: 2560, h: 1440, freq: 60},
-		checked: false,
 	},
 
 ];

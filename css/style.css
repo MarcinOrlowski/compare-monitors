@@ -27,6 +27,12 @@ a {
 	color: white;
 }
 
+.curved {
+	padding: 4px;
+	background: #454e10aa;
+	color: yellow;
+}
+
 .right {
 	position: absolute;
 	right: 0;
