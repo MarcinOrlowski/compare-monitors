@@ -26,7 +26,8 @@ The `monitors_src` array holds monitors as separate objects, i.e.
     h: 2160,
     freq: 60
   },
-  checked: true
+  checked: true,
+  curved: false
 },
 ```
 
@@ -37,12 +38,13 @@ where fields are:
   from [www.displayspecifications.com](https://www.displayspecifications.com/) site I was using. It
   is mostly used to construct reference link (if you need more specs) and to get the monitor image
   thumbnail,
-* `display` specifies `w`idth and `h`eight of the display. The units are millimeters, but units are
-  in fact quite irrelevant and can be anything you want. Just keep it the same for each monitor
-  otherwise comparison would have no much sense.
+* `display` specifies `w`idth and `h`eight of the display. The units are **millimeters** by design,
+  but units are in fact quite irrelevant and can be anything you want. Just keep it the same for
+  each monitor  otherwise comparison would have no much sense.
 * `resolution` specifies `w`idth, `h`eight (in pixels) and max. refresh `freq`uency of the display.
 * `checked` determines if monitor is enabled `true` (default) or excluded from visual
   comparison (`false`).
+* `curved` is boolean flag indicating if monitor is curved or not.
 
 Once you set it all up, just use any web browser and open `index.html` file and that's it. You do *
 *NOT** need any webserver installed nor running. It's all local. Just
@@ -51,7 +53,6 @@ you should be good.
 
 # License #
 
-* Written and copyrighted &copy;2020-2023 by Marcin Orlowski <mail (#) marcinorlowski (.) com>
+* Written and copyrighted &copy;2020-2025 by Marcin Orlowski <mail (#) MarcinOrlowski (.) com>
 * This application is open-sourced software licensed under
   the [MIT license](http://opensource.org/licenses/MIT)
-
