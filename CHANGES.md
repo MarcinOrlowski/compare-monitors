@@ -1,5 +1,10 @@
 # Changelog #
 
+* 2025-01-20
+    * Improved monitor label placement calculation
+    * Code cleanup
+    * Updated docs
+
 * 2023-07-23
     * Updated color pallete to make each element more distinctive.
     * You can now hover over list items to have it highlighted.

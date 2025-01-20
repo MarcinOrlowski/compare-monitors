@@ -5,7 +5,7 @@
 ** Compare Monitors utility
 **
 ** @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
-** @copyright 2020-2023 Marcin Orlowski
+** @copyright 2020-2025 Marcin Orlowski
 ** @license   http://www.opensource.org/licenses/mit-license.php MIT
 ** @link      https://github.com/MarcinOrlowski/compare-monitors
 */
@@ -28,14 +28,14 @@
             <option value="display">Display</option>
             <option value="resolution">Resolution</option>
         </select>
-        <button id="all_toggle" href="#">+/-</button>
-        <button id="all_off" href="#">-</button>
-        <button id="all_on" href="#">+</button>
+        <button id="all_toggle"></button>
+        <button id="all_off">-</button>
+        <button id="all_on">+</button>
         <br/>
         <div id="labels"></div>
         <div id="thumbnail">
             <img src="img/empty.png" id="thumbnail_img" alt="Monitor"><br/>
-            <img src="img/close-circle.svg" id="thumbnail_button" alt="Close thumbnail view" id="thumbnail_close"
+            <img src="img/close-circle.svg" id="thumbnail_button" alt="Close thumbnail view"
                  onclick="hideThumbnail();">
         </div>
     </div>
@@ -46,7 +46,8 @@
 <div id="gfx_ratio">Scale ratio: ???</div>
 <div>Resize the browser window to adjust the scaling.<br/>
     Hoover your mouse over the list item to highlight it.<br/>
-    Edit "monitors.js" file to edit monitors then reload this page.
+    Edit "monitors.js" file to edit monitors then reload this page.<br/>
+    The <strong>🖵</strong> icon indicates curved display.
 </div>
 </body>
 

@@ -2,7 +2,7 @@
 ** Compare Monitors utility
 **
 ** @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
-** @copyright 2020-2023 Marcin Orlowski
+** @copyright 2020-2025 Marcin Orlowski
 ** @license   http://www.opensource.org/licenses/mit-license.php MIT
 ** @link      https://github.com/MarcinOrlowski/compare-monitors
 */
@@ -21,6 +21,79 @@ const colors = [
 ];
 
 let monitors = new Map();
+
+/**
+ * Recalculates and updates positions for all visible monitor labels
+ */
+function recalculateAllLabelPositions(specs_key, gfx_divider) {
+    // Wait a tiny bit for visibility changes to take effect
+    setTimeout(() => {
+        $('.area:visible').each(function() {
+            const monitorDiv = $(this);
+            const id = monitorDiv.attr('id').replace('gfx_', '');
+            const monitor = monitors.get(id);
+            if (monitor) {
+                const top_pos = findLabelPosition(id, monitor, gfx_divider);
+                $(`#gfx_${id}_label_top`).css("top", top_pos + "px");
+            }
+        });
+    }, 50);
+}
+
+/**
+ * Find optimal label position considering overlaps
+ * @param {string} id Current monitor ID
+ * @param {object} currentMonitor Current monitor data
+ * @param {number} gfx_divider Scale ratio
+ * @returns {number} Optimal vertical position for label
+ */
+function findLabelPosition(id, currentMonitor, gfx_divider) {
+    const LABEL_HEIGHT = 24;
+    const LABEL_PADDING = 2;
+
+    // Get all visible monitor divs
+    const visibleDivs = $('.area:visible').not(`#gfx_${id}`);
+    const currentDiv = $(`#gfx_${id}`);
+
+    if (!currentDiv.length) return 0;
+
+    const currentBox = {
+        left: currentDiv.offset().left,
+        right: currentDiv.offset().left + currentDiv.width(),
+        top: currentDiv.offset().top
+    };
+
+    // Find monitors that overlap horizontally
+    const overlappingLabels = [];
+    visibleDivs.each(function() {
+        const otherDiv = $(this);
+        const otherLeft = otherDiv.offset().left;
+        const otherRight = otherLeft + otherDiv.width();
+
+        // Check horizontal overlap
+        if (!(currentBox.right < otherLeft || currentBox.left > otherRight)) {
+            const labelDiv = otherDiv.find('.label.top.right');
+            if (labelDiv.length) {
+                overlappingLabels.push(labelDiv.offset().top);
+            }
+        }
+    });
+
+    // Start with the monitor's top position
+    let position = currentBox.top;
+
+    // Sort existing positions
+    overlappingLabels.sort((a, b) => a - b);
+
+    // Find first available gap
+    for (const existingPos of overlappingLabels) {
+        if (Math.abs(position - existingPos) < LABEL_HEIGHT + LABEL_PADDING) {
+            position = existingPos + LABEL_HEIGHT + LABEL_PADDING;
+        }
+    }
+
+    return Math.max(0, position - currentBox.top);
+}
 
 // Set to FALSE to show monitor index instead of label
 let show_label = true;
@@ -83,6 +156,44 @@ function generateId(monitor) {
 	return monitor["label"].toLowerCase().replace(/[\W_]+/g, "_");
 }
 
+/**
+ * Returns true if monitor is checked (enabled) on page load.
+ * @param {object} monitor
+ * @returns {boolean}
+ */
+function isChecked(monitor) {
+	let val = monitor.hasOwnProperty("checked") ? monitor['checked'] : false;
+	console.log(JSON.stringify(monitor));
+	console.log(JSON.stringify(val));
+	return val;
+}
+
+/**
+ * Returns true if monitor is curved, false otherwise.
+ *
+ * @param {object} monitor
+ * @returns {boolean}
+ */
+function isCurvedMonitor(monitor) {
+	return monitor.hasOwnProperty("curved") ? monitor['curved'] : false;
+}
+
+/**
+ * Formats monitor label, optionally adding curved indicator. Note it can return HTML formatted string.
+ *
+ * @param {object} monitor data
+ * @returns {string} formatted label to be displayed. Can contain HTML.
+ */
+function getMonitorLabel(monitor){
+	let label = monitor["label"];
+	if (isCurvedMonitor(monitor)) {
+		label += ' 🖵';
+		label = `<span class="curved">${label}</span>`;
+	}
+
+	return label;
+}
+
 function createOverlays(specs_key) {
 	// sort by display specs
 	switch (specs_key) {
@@ -104,10 +215,6 @@ function createOverlays(specs_key) {
 	for (let index = 0; index < monitors_src.length; index++) {
 		let monitor = monitors_src[index];
 		monitor["z-index"] = index;
-
-		if (!monitor.hasOwnProperty("checked")) {
-			monitor["checked"] = true;
-		}
 
 		let id = generateId(monitor);
 		monitors_tmp.set(id, monitor);
@@ -138,15 +245,17 @@ function createOverlays(specs_key) {
 			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
 		].join("; ") + ";";
 
-		let label = monitor[show_label ? "label" : "index"];
-		let gfx_div = `<div id="gfx_${id}" class="area" style="${css}">
+		let label = show_label
+			? getMonitorLabel(monitor)
+			: monitor["index"];
+				let gfx_div = `<div id="gfx_${id}" class="area" style="${css}">
 			<div id="gfx_${id}_label_top" class="label top right">${label}</div>
 		</div>`;
 
 		$("#gfx").append(gfx_div);
-		let top_pos = (monitor['index'] - 1) * 30;
+		let top_pos = findLabelPosition(id, monitor, gfx_divider);
 		$(`#gfx_${id}_label_top`).css({"top": top_pos});
-		$(`#gfx_${id}`).toggle(monitor["checked"]);
+		$(`#gfx_${id}`).toggle(isChecked(monitor));
 
 		let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
 		switch (specs_key) {
@@ -158,15 +267,16 @@ function createOverlays(specs_key) {
 				break;
 		}
 
-		let checked = monitor["checked"] ? 'checked="checked"' : "";
-		let grayscale_level = monitor["checked"] ? '0.0' : '1.0';
+		let checked = isChecked(monitor) ? 'checked="checked"' : "";
+		let grayscale_level = isChecked(monitor) ? '0.0' : '1.0';
 		let item_index = show_label ? '' : `${monitor["index"]}: `;
 		let list_id = `list_${monitor["model"]}`;
+		let item_label = getMonitorLabel(monitor);
 		let label_div = `
 			<div id="${list_id}" style="background-color: ${bg_color}; filter: grayscale(${grayscale_level})">
 				<input type="checkbox" id="${id}" ${checked}>
 				<label for="${id}">
-					${item_index}${monitor["label"]}
+					${item_index}${item_label}
 						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
 						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
 					<br />${specs}
@@ -176,14 +286,14 @@ function createOverlays(specs_key) {
 
 		// add handler reacting to hoover on the div
 		$(`#${list_id}`).on( "mouseenter", function () {
-				if (monitor["checked"]) {
+				if (isChecked(monitor)) {
 					$(`#${list_id}`).css("filter", "brightness(150%)");
 				}
 				$(`.area`).css("filter", "brightness(50%)").css("opacity", "0.5").css("filter", "grayscale(1)");
 				$(`#gfx_${id}`).css("filter", "brightness(150%)").css("opacity", "1.0").css("filter", "grayscale(0)");
 			})
 			.on( "mouseleave", function () {
-				if (monitor["checked"]) {
+				if (isChecked(monitor)) {
 					$(`#${list_id}`).css("filter", "brightness(100%)");
 				}
 				$(`.area`).css("filter", "brightness(100%)").css("opacity", "1.0").css('filter', "grayscale(0)");
@@ -197,8 +307,11 @@ function createOverlays(specs_key) {
 			monitors.set(id, monitor);
 			$(`#gfx_${id}`).toggle();
 
-			let grayscale_level = monitor["checked"] ? '0.0' : '1.0';
+			let grayscale_level = isChecked(monitor) ? '0.0' : '1.0';
 			$(`#${list_id}`).css('filter', `grayscale(${grayscale_level})`);
+
+			// Recalculate all label positions after visibility change
+			recalculateAllLabelPositions(specs_key, gfx_divider);
 		});
 	}
 }
@@ -260,4 +373,3 @@ $(window).on("load", function () {
 		});
 	}
 );
-
