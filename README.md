@@ -46,9 +46,9 @@ where fields are:
   comparison (`false`).
 * `curved` is boolean flag indicating if monitor is curved or not.
 
-Once you set it all up, just use any web browser and open `index.html` file and that's it. You do *
-*NOT** need any webserver installed nor running. It's all local. Just
-type `file://<PATH TO WHERE YOU GOT THESE FILES STORED>/index.html` in your browser address bar and
+Once you set it all up, just use any web browser and open `index.html` file and that's it. You do 
+**NOT** need any webserver installed nor running. It's all local. Just type
+`file://<PATH TO WHERE YOU GOT THESE FILES STORED>/index.html` in your browser address bar and
 you should be good.
 
 # License #
