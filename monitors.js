@@ -2,7 +2,7 @@
 ** Compare Monitors utility
 **
 ** @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
-** @copyright 2020-2023 Marcin Orlowski
+** @copyright 2020-2025 Marcin Orlowski
 ** @license   http://www.opensource.org/licenses/mit-license.php MIT
 ** @link      https://github.com/MarcinOrlowski/compare-monitors
 */
@@ -95,4 +95,3 @@ let monitors_src = [
 	},
 
 ];
-
