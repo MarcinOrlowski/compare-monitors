@@ -181,8 +181,6 @@ function generateId(monitor) {
  */
 function isChecked(monitor) {
 	let val = monitor.hasOwnProperty("checked") ? monitor['checked'] : false;
-	console.log(JSON.stringify(monitor));
-	console.log(JSON.stringify(val));
 	return val;
 }
 
@@ -205,7 +203,7 @@ function isCurvedMonitor(monitor) {
 function getMonitorLabel(monitor){
 	let label = monitor["label"];
 	if (isCurvedMonitor(monitor)) {
-		label += ' 🖵';
+		label += ' <span title="Curved display">🖵</span>';
 		label = `<span class="curved">${label}</span>`;
 	}
 
@@ -327,7 +325,7 @@ function createOverlays(specs_key) {
 					</div>
 				</label>
 				<div class="monitor-thumbnail">
-					<img src="https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg" onclick="showLargeThumbnail('${monitor["model"]}');" />
+					<img src="https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg" onclick="showLargeThumbnail('${id}');" />
 				</div>
 			</div>`;
 		$("#labels").append(label_div);
@@ -380,9 +378,11 @@ function createOverlays(specs_key) {
 }
 
 
-function showLargeThumbnail(model) {
-	let url = `https://www.displayspecifications.com/images/model/${model}/640/main.jpg`;
+function showLargeThumbnail(id) {
+	let monitor = monitors.get(id);
+	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/640/main.jpg`;
 	$("#large_thumbnail_img").attr("src", url);
+	$("#large_thumbnail_label").html(getMonitorLabel(monitor));
 	$("#large_thumbnail_overlay").addClass("show");
 }
 
