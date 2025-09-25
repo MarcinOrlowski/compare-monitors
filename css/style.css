@@ -210,6 +210,22 @@ body {
 	flex: 1;
 }
 
+/* Scale ratio overlay */
+.scale-overlay {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #f0f0f0;
+	padding: 0.5rem;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	z-index: 1000;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(5px);
+}
+
 /* Monitor area divs */
 .area {
 	position: absolute;
@@ -229,11 +245,6 @@ body {
 	flex-shrink: 0;
 }
 
-.scale-info {
-	font-weight: 600;
-	color: #f0f0f0;
-	font-size: 0.9rem;
-}
 
 .instructions {
 	font-size: 0.8rem;
