@@ -254,15 +254,16 @@ body {
 	max-width: calc(100% - 2rem);
 	max-height: calc(100% - 2rem);
 	margin: 1rem;
+	background-color: white;
+	padding: 20px;
+	border-radius: 8px;
 }
 
 .large-thumbnail-content img {
 	width: 640px;
 	height: 640px;
 	object-fit: cover;
-	border-radius: 8px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-	background-color: #333;
+	background-color: #f0f0f0;
 }
 
 .close-button {
