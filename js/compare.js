@@ -417,10 +417,13 @@ $(document).ready(function () {
 
 		// toggle/all on/all off switches
 		$("#all_toggle").on("click", function () {
-			$("#labels input[type=checkbox]").each(function () {
-				$(this).prop("checked", !($(this).prop("checked") == true));
-				$(this).trigger("change");
-			});
+			for (let [id, monitor] of monitors) {
+				monitor["checked"] = !monitor["checked"];
+				monitors.set(id, monitor);
+				$(`#${id}`).prop("checked", monitor["checked"]);
+			}
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 
 		$("#all_off").on("click", function () {
