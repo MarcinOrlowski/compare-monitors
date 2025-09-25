@@ -431,6 +431,15 @@ a:hover {
 	color: #e0e0e0;
 }
 
+.color-square {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-right: 0.5rem;
+	border-radius: 2px;
+	vertical-align: middle;
+}
+
 /* Positioning classes */
 .right {
 	position: absolute;

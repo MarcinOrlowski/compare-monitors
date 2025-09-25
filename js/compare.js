@@ -195,16 +195,21 @@ function isCurvedMonitor(monitor) {
 }
 
 /**
- * Formats monitor label, optionally adding curved indicator. Note it can return HTML formatted string.
+ * Formats monitor label, optionally adding curved indicator and color square. Note it can return HTML formatted string.
  *
  * @param {object} monitor data
+ * @param {string} color optional color hex code for color square prefix
  * @returns {string} formatted label to be displayed. Can contain HTML.
  */
-function getMonitorLabel(monitor){
+function getMonitorLabel(monitor, color = null){
 	let label = monitor["label"];
 	if (isCurvedMonitor(monitor)) {
 		label += ' <span title="Curved display">🖵</span>';
 		label = `<span class="curved">${label}</span>`;
+	}
+
+	if (color) {
+		label = `<span class="color-square" style="background-color: ${color};"></span>${label}`;
 	}
 
 	return label;
@@ -364,8 +369,9 @@ function createOverlays(specs_key) {
 	// Draw all monitor labels at the end so they appear on top
 	for (let [id, monitor] of monitors) {
 		if (isChecked(monitor)) {
+			let color = colors[monitor["z-index"] % colors.length];
 			let label = show_label
-				? getMonitorLabel(monitor)
+				? getMonitorLabel(monitor, color)
 				: monitor["index"];
 
 			let label_div = `<div id="gfx_${id}_label_top" class="label top right" style="z-index: 9999;">${label}</div>`;
@@ -380,9 +386,10 @@ function createOverlays(specs_key) {
 
 function showLargeThumbnail(id) {
 	let monitor = monitors.get(id);
+	let color = colors[monitor["z-index"] % colors.length];
 	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/640/main.jpg`;
 	$("#large_thumbnail_img").attr("src", url);
-	$("#large_thumbnail_label").html(getMonitorLabel(monitor));
+	$("#large_thumbnail_label").html(getMonitorLabel(monitor, color));
 	$("#large_thumbnail_overlay").addClass("show");
 }
 
