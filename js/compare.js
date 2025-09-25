@@ -320,13 +320,15 @@ function createOverlays(specs_key) {
 				<label for="${id}" class="monitor-details">
 					<div class="monitor-name">
 						${item_index}${item_label}
-						<span class="monitor-links">
-							<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}" title="View specifications">📊</a>
-							<a href="#" onclick="showThumbnail('${id}');" title="Show thumbnail">🖼️</a>
-						</span>
 					</div>
-					<div class="monitor-specs">${specs}</div>
+					<div class="monitor-specs">
+						<span>${specs}</span>
+						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}" title="View specifications">📊</a>
+					</div>
 				</label>
+				<div class="monitor-thumbnail">
+					<img src="https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg" />
+				</div>
 			</div>`;
 		$("#labels").append(label_div);
 

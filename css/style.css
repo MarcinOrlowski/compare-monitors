@@ -192,6 +192,40 @@ body {
 	font-size: 0.9em;
 	color: #b0b0b0;
 	font-weight: 400;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.monitor-specs a {
+	font-size: 1.1em;
+	text-decoration: none;
+	opacity: 0.8;
+	transition: opacity 0.2s ease;
+}
+
+.monitor-specs a:hover {
+	opacity: 1;
+	transform: scale(1.1);
+}
+
+/* Monitor thumbnail */
+.monitor-thumbnail {
+	flex-shrink: 0;
+	margin-left: 0.5rem;
+}
+
+.monitor-thumbnail img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 4px;
+	opacity: 0.8;
+	transition: opacity 0.2s ease;
+}
+
+.monitor-thumbnail img:hover {
+	opacity: 1;
 }
 
 /* Thumbnail panel */
