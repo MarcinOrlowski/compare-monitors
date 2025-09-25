@@ -273,13 +273,19 @@ function createOverlays(specs_key) {
 		let list_id = `list_${monitor["model"]}`;
 		let item_label = getMonitorLabel(monitor);
 		let label_div = `
-			<div id="${list_id}" style="background-color: ${bg_color}; filter: grayscale(${grayscale_level})">
-				<input type="checkbox" id="${id}" ${checked}>
-				<label for="${id}">
-					${item_index}${item_label}
-						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}" title="View specifications">📊</a>
-						<a href="#" onclick="showThumbnail('${id}');" title="Show thumbnail">🖼️</a>
-					<br />${specs}
+			<div id="${list_id}" class="monitor-item" style="background-color: ${bg_color}; filter: grayscale(${grayscale_level})">
+				<div class="monitor-checkbox">
+					<input type="checkbox" id="${id}" ${checked}>
+				</div>
+				<label for="${id}" class="monitor-details">
+					<div class="monitor-name">
+						${item_index}${item_label}
+						<span class="monitor-links">
+							<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}" title="View specifications">📊</a>
+							<a href="#" onclick="showThumbnail('${id}');" title="Show thumbnail">🖼️</a>
+						</span>
+					</div>
+					<div class="monitor-specs">${specs}</div>
 				</label>
 			</div>`;
 		$("#labels").append(label_div);
