@@ -376,11 +376,11 @@ function createOverlays(specs_key) {
 
 			let label_div = `<div id="gfx_${id}_label_top" class="label top right" style="z-index: 9999;">${label}</div>`;
 			$(`#gfx_${id}`).append(label_div);
-
-			let top_pos = findLabelPosition(id, monitor, gfx_divider);
-			$(`#gfx_${id}_label_top`).css({"top": top_pos});
 		}
 	}
+
+	// Recalculate all label positions after all labels are created
+	recalculateAllLabelPositions(specs_key, gfx_divider);
 }
 
 
