@@ -147,18 +147,11 @@ body {
 }
 
 .monitor-checkbox {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	cursor: pointer;
+	display: none;
 }
 
 .monitor-checkbox input[type="checkbox"] {
-	width: 18px;
-	height: 18px;
-	cursor: pointer;
-	accent-color: #4a9eff;
+	display: none;
 }
 
 .monitor-details {
