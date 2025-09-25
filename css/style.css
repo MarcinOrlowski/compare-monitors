@@ -34,7 +34,6 @@ body {
 
 .controls {
 	padding: 1rem;
-	border-bottom: 1px solid #333;
 }
 
 .controls h2 {
@@ -97,10 +96,7 @@ body {
 
 /* Button separator */
 .button-separator {
-	width: 2px;
-	height: 24px;
-	background-color: #666;
-	margin: 0 4px;
+	width: 12px;
 	flex-shrink: 0;
 }
 
@@ -353,20 +349,14 @@ a:hover {
 	color: white;
 	border-radius: 4px;
 	font-size: 0.85rem;
-	font-weight: 500;
+	font-weight: bold;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 	backdrop-filter: blur(5px);
 }
 
 .curved {
-	padding: 0.5rem;
-	background: rgba(0, 0, 0, 0.8);
-	color: white;
-	border-radius: 4px;
-	font-size: 0.85rem;
-	font-weight: 500;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-	backdrop-filter: blur(5px);
+	font-weight: bold;
+	color: #e0e0e0;
 }
 
 /* Positioning classes */

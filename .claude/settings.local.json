@@ -97,7 +97,8 @@
       "mcp__sentry__find_issues",
       "mcp__sentry__find_organizations",
       "mcp__sentry__find_projects",
-      "mcp__sentry__get_issue_details"
+      "mcp__sentry__get_issue_details",
+      "Bash(git add:*)"
     ],
     "deny": []
   },
