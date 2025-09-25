@@ -258,6 +258,22 @@ function createOverlays(specs_key) {
 		monitors[id] = monitor;
 	}
 
+	// Check if there are any checked monitors
+	let hasCheckedMonitors = false;
+	for (let [id, monitor] of monitors) {
+		if (isChecked(monitor)) {
+			hasCheckedMonitors = true;
+			break;
+		}
+	}
+
+	// Auto-disable hiding if no checked monitors exist
+	if (hideUncheckedMonitors && !hasCheckedMonitors) {
+		hideUncheckedMonitors = false;
+		$("#hide_unchecked").removeClass("active");
+		$("#hide_unchecked").attr("title", "Hide unchecked monitors from list").text("👁️");
+	}
+
 	for (let [id, monitor] of monitors) {
 		// Skip unchecked monitors if hiding is enabled
 		if (hideUncheckedMonitors && !isChecked(monitor)) {
