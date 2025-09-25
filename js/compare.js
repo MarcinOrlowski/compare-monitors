@@ -417,21 +417,27 @@ $(document).ready(function () {
 		});
 
 		$("#all_off").on("click", function () {
-			$("#labels input[type=checkbox]").each(function () {
-				if ($(this).prop("checked")) {
-					$(this).prop("checked", false);
-					$(this).trigger("change");
+			for (let [id, monitor] of monitors) {
+				if (monitor["checked"]) {
+					monitor["checked"] = false;
+					monitors.set(id, monitor);
+					$(`#${id}`).prop("checked", false);
 				}
-			});
+			}
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 
 		$("#all_on").on("click", function () {
-			$("#labels input[type=checkbox]").each(function () {
-				if (!$(this).prop("checked")) {
-					$(this).prop("checked", true);
-					$(this).trigger("change");
+			for (let [id, monitor] of monitors) {
+				if (!monitor["checked"]) {
+					monitor["checked"] = true;
+					monitors.set(id, monitor);
+					$(`#${id}`).prop("checked", true);
 				}
-			});
+			}
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 
 		// Manual scale control buttons
