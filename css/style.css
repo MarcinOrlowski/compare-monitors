@@ -62,36 +62,39 @@ body {
 	font-size: 0.9rem;
 }
 
-.button-group {
+/* Monitor toggle buttons */
+.monitor-toggle-buttons {
 	display: flex;
-	gap: 0.5rem;
+	gap: 1px;
+	margin: 0 1rem 4px 1rem;
+	border-radius: 4px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.button-group button {
+.monitor-toggle-buttons button {
 	flex: 1;
-	padding: 0.5rem;
+	padding: 0.4rem;
 	background-color: #444;
 	color: #e0e0e0;
-	border: 1px solid #666;
-	border-radius: 4px;
+	border: none;
 	cursor: pointer;
-	font-size: 0.9rem;
+	font-size: 0.8rem;
 	transition: all 0.2s ease;
 }
 
-.button-group button:hover {
+.monitor-toggle-buttons button:hover {
 	background-color: #555;
-	border-color: #777;
 }
 
-.button-group button:active {
-	transform: translateY(1px);
+.monitor-toggle-buttons button:active {
+	transform: scale(0.98);
 }
 
 /* Monitor list */
 .monitor-list {
 	flex: 1;
-	padding: 1rem;
+	padding: 0 1rem 1rem 1rem;
 	overflow-y: auto;
 }
 
@@ -172,6 +175,7 @@ body {
 	background-color: #333;
 	border-radius: 8px;
 	text-align: center;
+	display: none;
 }
 
 #thumbnail img {
@@ -329,8 +333,8 @@ a:hover {
 		padding: 1rem;
 	}
 
-	.button-group {
-		flex-direction: column;
+	.monitor-toggle-buttons {
+		margin: 0 1rem 1rem 1rem;
 	}
 
 	.instructions {
