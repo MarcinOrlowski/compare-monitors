@@ -346,7 +346,7 @@ function createOverlays(specs_key) {
 				? getMonitorLabel(monitor)
 				: monitor["index"];
 
-			let label_div = `<div id="gfx_${id}_label_top" class="label top right">${label}</div>`;
+			let label_div = `<div id="gfx_${id}_label_top" class="label top right" style="z-index: 9999;">${label}</div>`;
 			$(`#gfx_${id}`).append(label_div);
 
 			let top_pos = findLabelPosition(id, monitor, gfx_divider);
