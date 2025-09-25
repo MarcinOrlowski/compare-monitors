@@ -433,8 +433,9 @@ $(document).ready(function () {
 				// Going from 1:X to 1:(X+1)
 				manualScaleRatio = currentRatio + 1;
 			} else {
-				// Going from Y:1 to (Y-1):1 (larger divider = less zoom)
-				manualScaleRatio = Math.min(1, currentRatio * 1.25);
+				// Going from Y:1 to (Y-1):1 or crossing over to 1:X
+				let newRatio = currentRatio * 1.25;
+				manualScaleRatio = newRatio;
 			}
 			let type = $("#type").val();
 			createOverlays(type);
