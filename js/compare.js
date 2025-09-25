@@ -134,9 +134,9 @@ function getScaleRatio(key) {
 	}
 
 	let div_width = Math.round($("#gfx").width());
-	let ratio = Math.round((max_width / div_width) + 0.5);
-	if (ratio < 1) {
-		ratio = 1;
+	let ratio = (max_width / div_width);
+	if (ratio < 0.5) {
+		ratio = 0.5;
 	}
 	return ratio;
 }
@@ -225,7 +225,14 @@ function createOverlays(specs_key) {
 
 	let gfx_divider = getScaleRatio(specs_key);
 
-	$("#gfx_ratio").html(`Scale ratio: <b>1:${gfx_divider}</b>`);
+	// Format scale ratio display
+	let scale_display;
+	if (gfx_divider >= 1) {
+		scale_display = `1:${Math.round(gfx_divider)}`;
+	} else {
+		scale_display = `${Math.round(1/gfx_divider)}:1`;
+	}
+	$("#gfx_ratio").html(`Scale ratio: <b>${scale_display}</b>`);
 
 	// generate Ids
 	let monitors_tmp = new Map();
@@ -409,16 +416,26 @@ $(document).ready(function () {
 		// Manual scale control buttons
 		$("#scale_up").on("click", function () {
 			let currentRatio = getScaleRatio($("#type").val());
-			if (currentRatio > 1) {
-				manualScaleRatio = currentRatio - 1;
-				let type = $("#type").val();
-				createOverlays(type);
+			if (currentRatio >= 1) {
+				// Going from 1:X to 1:(X-1)
+				manualScaleRatio = Math.max(0.5, currentRatio - 1);
+			} else {
+				// Going from Y:1 to (Y+1):1 (smaller divider = more zoom)
+				manualScaleRatio = Math.max(0.5, currentRatio * 0.8);
 			}
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 
 		$("#scale_down").on("click", function () {
 			let currentRatio = getScaleRatio($("#type").val());
-			manualScaleRatio = currentRatio + 1;
+			if (currentRatio >= 1) {
+				// Going from 1:X to 1:(X+1)
+				manualScaleRatio = currentRatio + 1;
+			} else {
+				// Going from Y:1 to (Y-1):1 (larger divider = less zoom)
+				manualScaleRatio = Math.min(1, currentRatio * 1.25);
+			}
 			let type = $("#type").val();
 			createOverlays(type);
 		});
