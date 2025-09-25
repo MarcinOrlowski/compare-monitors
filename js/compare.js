@@ -262,16 +262,10 @@ function createOverlays(specs_key) {
 			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
 		].join("; ") + ";";
 
-		let label = show_label
-			? getMonitorLabel(monitor)
-			: monitor["index"];
-				let gfx_div = `<div id="gfx_${id}" class="area" style="${css}">
-			<div id="gfx_${id}_label_top" class="label top right">${label}</div>
-		</div>`;
+		// Create monitor rectangle without label
+		let gfx_div = `<div id="gfx_${id}" class="area" style="${css}"></div>`;
 
 		$("#gfx").append(gfx_div);
-		let top_pos = findLabelPosition(id, monitor, gfx_divider);
-		$(`#gfx_${id}_label_top`).css({"top": top_pos});
 		$(`#gfx_${id}`).toggle(isChecked(monitor));
 
 		let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
@@ -336,6 +330,21 @@ function createOverlays(specs_key) {
 			// Recalculate scale ratio and redraw everything
 			createOverlays(specs_key);
 		});
+	}
+
+	// Draw all monitor labels at the end so they appear on top
+	for (let [id, monitor] of monitors) {
+		if (isChecked(monitor)) {
+			let label = show_label
+				? getMonitorLabel(monitor)
+				: monitor["index"];
+
+			let label_div = `<div id="gfx_${id}_label_top" class="label top right">${label}</div>`;
+			$(`#gfx_${id}`).append(label_div);
+
+			let top_pos = findLabelPosition(id, monitor, gfx_divider);
+			$(`#gfx_${id}_label_top`).css({"top": top_pos});
+		}
 	}
 }
 
