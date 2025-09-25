@@ -329,7 +329,7 @@ function hideThumbnail() {
 	$("#thumbnail").hide();
 }
 
-$(window).on("load", function () {
+$(document).ready(function () {
 		hideThumbnail();
 
 		let type = $("#type").val();

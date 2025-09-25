@@ -1,38 +1,216 @@
-body {
-	background-color: #282828;
-	color: #e0b595;
+/* Reset and base styles */
+* {
+	box-sizing: border-box;
 }
 
-#gfx_container {
-	flex: 7;
+body {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	background-color: #1a1a1a;
+	color: #e0e0e0;
+	line-height: 1.6;
+}
+
+/* Main layout container */
+.main-container {
+	display: flex;
+	min-height: 100vh;
+	gap: 1rem;
+}
+
+/* Sidebar */
+.sidebar {
+	flex: 0 0 300px;
+	background-color: #242424;
+	border-right: 2px solid #333;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}
+
+.controls {
+	padding: 1.5rem;
+	border-bottom: 1px solid #333;
+}
+
+.controls h2 {
+	margin: 0 0 1rem 0;
+	color: #f0f0f0;
+	font-size: 1.25rem;
+	font-weight: 600;
+}
+
+.control-group {
+	margin-bottom: 1rem;
+}
+
+.control-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	color: #d0d0d0;
+}
+
+.control-group select {
+	width: 100%;
+	padding: 0.5rem;
+	background-color: #333;
+	color: #e0e0e0;
+	border: 1px solid #555;
+	border-radius: 4px;
+	font-size: 0.9rem;
+}
+
+.button-group {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.button-group button {
+	flex: 1;
+	padding: 0.5rem;
+	background-color: #444;
+	color: #e0e0e0;
+	border: 1px solid #666;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.9rem;
+	transition: all 0.2s ease;
+}
+
+.button-group button:hover {
+	background-color: #555;
+	border-color: #777;
+}
+
+.button-group button:active {
+	transform: translateY(1px);
+}
+
+/* Monitor list */
+.monitor-list {
+	flex: 1;
+	padding: 1rem;
+	overflow-y: auto;
+}
+
+/* Thumbnail panel */
+#thumbnail {
+	margin: 1rem;
+	padding: 1rem;
+	background-color: #333;
+	border-radius: 8px;
+	text-align: center;
+}
+
+#thumbnail img {
+	max-width: 100%;
+	height: auto;
+}
+
+#thumbnail_button {
+	max-width: 32px;
+	max-height: 32px;
+	cursor: pointer;
+	margin-top: 0.5rem;
+}
+
+/* Main visualization area */
+.visualization {
+	flex: 1;
+	background-color: #1a1a1a;
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 }
 
 #gfx {
 	position: relative;
-	z-index: -1;
-	padding: 10px;
+	z-index: 1;
+	padding: 2rem;
+	flex: 1;
 }
 
-.flex-container {
+/* Monitor area divs */
+.area {
+	position: absolute;
+	transition: all 0.3s ease;
+}
+
+/* Footer info panel */
+.info-panel {
+	background-color: #242424;
+	border-top: 1px solid #333;
+	padding: 1rem;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2rem;
+	margin-top: 2rem;
 }
 
+.scale-info {
+	font-weight: 600;
+	color: #f0f0f0;
+	font-size: 0.9rem;
+}
+
+.instructions {
+	font-size: 0.8rem;
+	color: #b0b0b0;
+}
+
+.instructions p {
+	margin: 0 0 0.5rem 0;
+	font-weight: 500;
+}
+
+.instructions ul {
+	margin: 0;
+	padding-left: 1.2rem;
+	list-style-type: disc;
+}
+
+.instructions li {
+	margin-bottom: 0.2rem;
+}
+
+/* Monitor overlay styles */
 a {
-	color: white;
+	color: #4a9eff;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #6bb6ff;
+	text-decoration: underline;
 }
 
 .label {
-	padding: 4px;
-	background: #000000AA;
+	padding: 0.5rem;
+	background: rgba(0, 0, 0, 0.8);
 	color: white;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(5px);
 }
 
 .curved {
-	padding: 4px;
-	background: #454e10aa;
-	color: yellow;
+	padding: 0.5rem;
+	background: rgba(69, 78, 16, 0.9);
+	color: #ffeb3b;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(5px);
 }
 
+/* Positioning classes */
 .right {
 	position: absolute;
 	right: 0;
@@ -48,16 +226,53 @@ a {
 	bottom: 0;
 }
 
-#thumbnail {
-	width: 100%;
-	object-fit: contain;
-	background-color: gray;
-	/* center items */
-	display: flex;
-	justify-content: center;
+/* Responsive design */
+@media (max-width: 768px) {
+	.main-container {
+		flex-direction: column;
+	}
+
+	.sidebar {
+		flex: none;
+		order: 2;
+		max-height: 300px;
+	}
+
+	.visualization {
+		order: 1;
+		min-height: 60vh;
+	}
+
+	.info-panel {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 1rem;
+	}
+
+	#gfx {
+		padding: 1rem;
+	}
 }
 
-#thumbnail_button {
-	max-width: 32px;
-	max-height: 32px;
+@media (max-width: 480px) {
+	.controls {
+		padding: 1rem;
+	}
+
+	.button-group {
+		flex-direction: column;
+	}
+
+	.instructions {
+		font-size: 0.7rem;
+	}
+}
+
+/* Legacy compatibility */
+.flex-container {
+	display: flex;
+}
+
+#gfx_container {
+	/* Legacy selector - now handled by .visualization */
 }
