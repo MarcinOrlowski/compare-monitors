@@ -22,6 +22,7 @@ const colors = [
 
 let monitors = new Map();
 let manualScaleRatio = null; // Manual override for scale ratio
+let hideUncheckedMonitors = false; // Toggle state for hiding unchecked monitors
 
 /**
  * Recalculates and updates positions for all visible monitor labels
@@ -258,6 +259,11 @@ function createOverlays(specs_key) {
 	}
 
 	for (let [id, monitor] of monitors) {
+		// Skip unchecked monitors if hiding is enabled
+		if (hideUncheckedMonitors && !isChecked(monitor)) {
+			continue;
+		}
+
 		let bg_color = colors[monitor["z-index"] % colors.length] + "aa";
 		let border_color = colors[monitor["z-index"] % colors.length] + "22";
 		let css = [
@@ -437,6 +443,21 @@ $(document).ready(function () {
 				let newRatio = currentRatio * 1.25;
 				manualScaleRatio = newRatio;
 			}
+			let type = $("#type").val();
+			createOverlays(type);
+		});
+
+		// Hide unchecked monitors toggle
+		$("#hide_unchecked").on("click", function () {
+			hideUncheckedMonitors = !hideUncheckedMonitors;
+			$(this).toggleClass("active", hideUncheckedMonitors);
+
+			if (hideUncheckedMonitors) {
+				$(this).attr("title", "Show all monitors in list").text("👁️‍🗨️");
+			} else {
+				$(this).attr("title", "Hide unchecked monitors from list").text("👁️");
+			}
+
 			let type = $("#type").val();
 			createOverlays(type);
 		});

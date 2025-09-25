@@ -68,6 +68,7 @@ body {
 /* Monitor toggle buttons */
 .monitor-toggle-buttons {
 	display: flex;
+	align-items: center;
 	gap: 1px;
 	margin: 0 1rem 4px 1rem;
 	border-radius: 4px;
@@ -92,6 +93,39 @@ body {
 
 .monitor-toggle-buttons button:active {
 	transform: scale(0.98);
+}
+
+/* Button separator */
+.button-separator {
+	width: 2px;
+	height: 24px;
+	background-color: #666;
+	margin: 0 4px;
+	flex-shrink: 0;
+}
+
+/* Filter button in same row */
+.filter-button {
+	flex: 1;
+	padding: 0.4rem;
+	background-color: #444;
+	color: #e0e0e0;
+	border: none;
+	cursor: pointer;
+	font-size: 0.8rem;
+	transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+	background-color: #555;
+}
+
+.filter-button:active {
+	transform: scale(0.98);
+}
+
+.filter-button.active {
+	background-color: #4a9eff;
 }
 
 /* Monitor list */
