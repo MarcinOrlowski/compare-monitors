@@ -277,8 +277,8 @@ function createOverlays(specs_key) {
 				<input type="checkbox" id="${id}" ${checked}>
 				<label for="${id}">
 					${item_index}${item_label}
-						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
-						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
+						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}" title="View specifications">📊</a>
+						<a href="#" onclick="showThumbnail('${id}');" title="Show thumbnail">🖼️</a>
 					<br />${specs}
 				</label>
 			</div>`;
