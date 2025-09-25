@@ -21,6 +21,7 @@ const colors = [
 ];
 
 let monitors = new Map();
+let manualScaleRatio = null; // Manual override for scale ratio
 
 /**
  * Recalculates and updates positions for all visible monitor labels
@@ -108,11 +109,27 @@ let show_label = true;
  * @returns {number}
  */
 function getScaleRatio(key) {
+	// If manual scale ratio is set, use it
+	if (manualScaleRatio !== null) {
+		return manualScaleRatio;
+	}
+
 	let max_width = 0;
 	for (const element of monitors_src) {
 		let monitor = element;
-		if (monitor[key]["w"] > max_width) {
+		// Only consider enabled/checked monitors
+		if (isChecked(monitor) && monitor[key]["w"] > max_width) {
 			max_width = monitor[key]["w"];
+		}
+	}
+
+	// If no monitors are enabled, use the original behavior
+	if (max_width === 0) {
+		for (const element of monitors_src) {
+			let monitor = element;
+			if (monitor[key]["w"] > max_width) {
+				max_width = monitor[key]["w"];
+			}
 		}
 	}
 
@@ -316,8 +333,8 @@ function createOverlays(specs_key) {
 			let grayscale_level = isChecked(monitor) ? '0.0' : '1.0';
 			$(`#${list_id}`).css('filter', `grayscale(${grayscale_level})`);
 
-			// Recalculate all label positions after visibility change
-			recalculateAllLabelPositions(specs_key, gfx_divider);
+			// Recalculate scale ratio and redraw everything
+			createOverlays(specs_key);
 		});
 	}
 }
@@ -343,6 +360,8 @@ $(document).ready(function () {
 
 		// redraw on browser window size change
 		$(window).resize(function() {
+			// Clear manual scale override when window is resized
+			manualScaleRatio = null;
 			let type = $("#type").val();
 			createOverlays(type);
 		});
@@ -376,6 +395,23 @@ $(document).ready(function () {
 					$(this).trigger("change");
 				}
 			});
+		});
+
+		// Manual scale control buttons
+		$("#scale_up").on("click", function () {
+			let currentRatio = getScaleRatio($("#type").val());
+			if (currentRatio > 1) {
+				manualScaleRatio = currentRatio - 1;
+				let type = $("#type").val();
+				createOverlays(type);
+			}
+		});
+
+		$("#scale_down").on("click", function () {
+			let currentRatio = getScaleRatio($("#type").val());
+			manualScaleRatio = currentRatio + 1;
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 	}
 );

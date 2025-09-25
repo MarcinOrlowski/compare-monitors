@@ -210,20 +210,56 @@ body {
 	flex: 1;
 }
 
-/* Scale ratio overlay */
-.scale-overlay {
+/* Scale controls container */
+.scale-controls {
 	position: absolute;
 	top: 4px;
 	left: 4px;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	z-index: 1000;
+}
+
+/* Scale ratio overlay */
+.scale-overlay {
 	background-color: rgba(0, 0, 0, 0.8);
 	color: #f0f0f0;
 	padding: 0.5rem;
 	border-radius: 4px;
 	font-size: 0.85rem;
 	font-weight: 500;
-	z-index: 1000;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 	backdrop-filter: blur(5px);
+}
+
+/* Scale control buttons */
+.scale-buttons {
+	display: flex;
+	gap: 2px;
+	border-radius: 4px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.scale-buttons button {
+	background-color: rgba(68, 68, 68, 0.9);
+	color: #e0e0e0;
+	border: none;
+	padding: 0.4rem 0.6rem;
+	cursor: pointer;
+	font-size: 0.9rem;
+	font-weight: bold;
+	transition: all 0.2s ease;
+	backdrop-filter: blur(5px);
+}
+
+.scale-buttons button:hover {
+	background-color: rgba(85, 85, 85, 0.9);
+}
+
+.scale-buttons button:active {
+	transform: scale(0.95);
 }
 
 /* Monitor area divs */
