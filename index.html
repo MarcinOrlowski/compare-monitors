@@ -42,11 +42,6 @@
             <button id="hide_unchecked" class="filter-button" title="Hide unchecked monitors from list">👁️</button>
         </div>
         <div id="labels" class="monitor-list"></div>
-        <div id="thumbnail">
-            <img src="img/empty.png" id="thumbnail_img" alt="Monitor">
-            <img src="img/close-circle.svg" id="thumbnail_button" alt="Close thumbnail view"
-                 onclick="hideThumbnail();">
-        </div>
     </aside>
     <main id="gfx_container" class="visualization">
         <div class="scale-controls">
@@ -57,6 +52,12 @@
             </div>
         </div>
         <div id="gfx"></div>
+        <div id="large_thumbnail_overlay" class="large-thumbnail-overlay">
+            <div class="large-thumbnail-content">
+                <img id="large_thumbnail_img" src="" alt="Monitor">
+                <button class="close-button" onclick="hideLargeThumbnail();">×</button>
+            </div>
+        </div>
     </main>
 </div>
 <footer class="info-panel">

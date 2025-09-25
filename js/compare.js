@@ -327,7 +327,7 @@ function createOverlays(specs_key) {
 					</div>
 				</label>
 				<div class="monitor-thumbnail">
-					<img src="https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg" />
+					<img src="https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg" onclick="showLargeThumbnail('${monitor["model"]}');" />
 				</div>
 			</div>`;
 		$("#labels").append(label_div);
@@ -379,21 +379,18 @@ function createOverlays(specs_key) {
 	}
 }
 
-function showThumbnail(id) {
-	let monitor = monitors.get(id);
-	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
-	$("#thumbnail_img").attr("src", url);
-	$("#thumbnail").show();
 
-	return true;
+function showLargeThumbnail(model) {
+	let url = `https://www.displayspecifications.com/images/model/${model}/640/main.jpg`;
+	$("#large_thumbnail_img").attr("src", url);
+	$("#large_thumbnail_overlay").addClass("show");
 }
 
-function hideThumbnail() {
-	$("#thumbnail").hide();
+function hideLargeThumbnail() {
+	$("#large_thumbnail_overlay").removeClass("show");
 }
 
 $(document).ready(function () {
-		hideThumbnail();
 
 		let type = $("#type").val();
 		createOverlays(type);
