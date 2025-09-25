@@ -235,7 +235,7 @@ body {
 /* Large thumbnail overlay */
 .large-thumbnail-overlay {
 	display: none;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -252,8 +252,9 @@ body {
 
 .large-thumbnail-content {
 	position: relative;
-	max-width: 90vw;
-	max-height: 90vh;
+	max-width: calc(100% - 2rem);
+	max-height: calc(100% - 2rem);
+	margin: 1rem;
 }
 
 .large-thumbnail-content img {
