@@ -21,6 +21,8 @@ const colors = [
 ];
 
 let monitors = new Map();
+let manualScaleRatio = null; // Manual override for scale ratio
+let hideUncheckedMonitors = false; // Toggle state for hiding unchecked monitors
 
 /**
  * Recalculates and updates positions for all visible monitor labels
@@ -108,18 +110,34 @@ let show_label = true;
  * @returns {number}
  */
 function getScaleRatio(key) {
+	// If manual scale ratio is set, use it
+	if (manualScaleRatio !== null) {
+		return manualScaleRatio;
+	}
+
 	let max_width = 0;
 	for (const element of monitors_src) {
 		let monitor = element;
-		if (monitor[key]["w"] > max_width) {
+		// Only consider enabled/checked monitors
+		if (isChecked(monitor) && monitor[key]["w"] > max_width) {
 			max_width = monitor[key]["w"];
 		}
 	}
 
+	// If no monitors are enabled, use the original behavior
+	if (max_width === 0) {
+		for (const element of monitors_src) {
+			let monitor = element;
+			if (monitor[key]["w"] > max_width) {
+				max_width = monitor[key]["w"];
+			}
+		}
+	}
+
 	let div_width = Math.round($("#gfx").width());
-	let ratio = Math.round((max_width / div_width) + 0.5);
-	if (ratio < 1) {
-		ratio = 1;
+	let ratio = (max_width / div_width);
+	if (ratio < 0.5) {
+		ratio = 0.5;
 	}
 	return ratio;
 }
@@ -163,8 +181,6 @@ function generateId(monitor) {
  */
 function isChecked(monitor) {
 	let val = monitor.hasOwnProperty("checked") ? monitor['checked'] : false;
-	console.log(JSON.stringify(monitor));
-	console.log(JSON.stringify(val));
 	return val;
 }
 
@@ -179,16 +195,21 @@ function isCurvedMonitor(monitor) {
 }
 
 /**
- * Formats monitor label, optionally adding curved indicator. Note it can return HTML formatted string.
+ * Formats monitor label, optionally adding curved indicator and color square. Note it can return HTML formatted string.
  *
  * @param {object} monitor data
+ * @param {string} color optional color hex code for color square prefix
  * @returns {string} formatted label to be displayed. Can contain HTML.
  */
-function getMonitorLabel(monitor){
+function getMonitorLabel(monitor, color = null){
 	let label = monitor["label"];
 	if (isCurvedMonitor(monitor)) {
-		label += ' 🖵';
+		label += ' <span title="Curved display">🖵</span>';
 		label = `<span class="curved">${label}</span>`;
+	}
+
+	if (color) {
+		label = `<span class="color-square" style="background-color: ${color};"></span>${label}`;
 	}
 
 	return label;
@@ -208,7 +229,14 @@ function createOverlays(specs_key) {
 
 	let gfx_divider = getScaleRatio(specs_key);
 
-	$("#gfx_ratio").html(`Scale ratio: <b>1:${gfx_divider}</b>`);
+	// Format scale ratio display
+	let scale_display;
+	if (gfx_divider >= 1) {
+		scale_display = `1:${Math.round(gfx_divider)}`;
+	} else {
+		scale_display = `${Math.round(1/gfx_divider)}:1`;
+	}
+	$("#gfx_ratio").html(`Scale ratio: <b>${scale_display}</b>`);
 
 	// generate Ids
 	let monitors_tmp = new Map();
@@ -233,7 +261,28 @@ function createOverlays(specs_key) {
 		monitors[id] = monitor;
 	}
 
+	// Check if there are any checked monitors
+	let hasCheckedMonitors = false;
 	for (let [id, monitor] of monitors) {
+		if (isChecked(monitor)) {
+			hasCheckedMonitors = true;
+			break;
+		}
+	}
+
+	// Auto-disable hiding if no checked monitors exist
+	if (hideUncheckedMonitors && !hasCheckedMonitors) {
+		hideUncheckedMonitors = false;
+		$("#hide_unchecked").removeClass("active");
+		$("#hide_unchecked").attr("title", "Hide unchecked monitors from list").text("👁️");
+	}
+
+	for (let [id, monitor] of monitors) {
+		// Skip unchecked monitors if hiding is enabled
+		if (hideUncheckedMonitors && !isChecked(monitor)) {
+			continue;
+		}
+
 		let bg_color = colors[monitor["z-index"] % colors.length] + "aa";
 		let border_color = colors[monitor["z-index"] % colors.length] + "22";
 		let css = [
@@ -245,16 +294,10 @@ function createOverlays(specs_key) {
 			"height: " + monitor[specs_key]["h"] / gfx_divider + "px",
 		].join("; ") + ";";
 
-		let label = show_label
-			? getMonitorLabel(monitor)
-			: monitor["index"];
-				let gfx_div = `<div id="gfx_${id}" class="area" style="${css}">
-			<div id="gfx_${id}_label_top" class="label top right">${label}</div>
-		</div>`;
+		// Create monitor rectangle without label
+		let gfx_div = `<div id="gfx_${id}" class="area" style="${css}"></div>`;
 
 		$("#gfx").append(gfx_div);
-		let top_pos = findLabelPosition(id, monitor, gfx_divider);
-		$(`#gfx_${id}_label_top`).css({"top": top_pos});
 		$(`#gfx_${id}`).toggle(isChecked(monitor));
 
 		let specs = `${monitor[specs_key]["w"]}x${monitor[specs_key]["h"]}`;
@@ -273,14 +316,22 @@ function createOverlays(specs_key) {
 		let list_id = `list_${monitor["model"]}`;
 		let item_label = getMonitorLabel(monitor);
 		let label_div = `
-			<div id="${list_id}" style="background-color: ${bg_color}; filter: grayscale(${grayscale_level})">
-				<input type="checkbox" id="${id}" ${checked}>
-				<label for="${id}">
-					${item_index}${item_label}
-						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}">Specs</a>
-						<a href="#" onclick="showThumbnail('${id}');">Thumb</a>
-					<br />${specs}
+			<div id="${list_id}" class="monitor-item" style="background-color: ${bg_color}; filter: grayscale(${grayscale_level})">
+				<div class="monitor-checkbox">
+					<input type="checkbox" id="${id}" ${checked}>
+				</div>
+				<label for="${id}" class="monitor-details">
+					<div class="monitor-name">
+						${item_index}${item_label}
+					</div>
+					<div class="monitor-specs">
+						<span>${specs}</span>
+						<a target="_blank" href="https://www.displayspecifications.com/en/model/${monitor["model"]}" title="View specifications">📊</a>
+					</div>
 				</label>
+				<div class="monitor-thumbnail">
+					<img src="https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg" onclick="showLargeThumbnail('${id}');" />
+				</div>
 			</div>`;
 		$("#labels").append(label_div);
 
@@ -310,33 +361,51 @@ function createOverlays(specs_key) {
 			let grayscale_level = isChecked(monitor) ? '0.0' : '1.0';
 			$(`#${list_id}`).css('filter', `grayscale(${grayscale_level})`);
 
-			// Recalculate all label positions after visibility change
-			recalculateAllLabelPositions(specs_key, gfx_divider);
+			// Recalculate scale ratio and redraw everything
+			createOverlays(specs_key);
 		});
 	}
+
+	// Draw all monitor labels at the end so they appear on top
+	for (let [id, monitor] of monitors) {
+		if (isChecked(monitor)) {
+			let color = colors[monitor["z-index"] % colors.length];
+			let label = show_label
+				? getMonitorLabel(monitor, color)
+				: monitor["index"];
+
+			let label_div = `<div id="gfx_${id}_label_top" class="label top right" style="z-index: 9999;">${label}</div>`;
+			$(`#gfx_${id}`).append(label_div);
+		}
+	}
+
+	// Recalculate all label positions after all labels are created
+	recalculateAllLabelPositions(specs_key, gfx_divider);
 }
 
-function showThumbnail(id) {
+
+function showLargeThumbnail(id) {
 	let monitor = monitors.get(id);
-	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/320/main.jpg`;
-	$("#thumbnail_img").attr("src", url);
-	$("#thumbnail").show();
-
-	return true;
+	let color = colors[monitor["z-index"] % colors.length];
+	let url = `https://www.displayspecifications.com/images/model/${monitor["model"]}/640/main.jpg`;
+	$("#large_thumbnail_img").attr("src", url);
+	$("#large_thumbnail_label").html(getMonitorLabel(monitor, color));
+	$("#large_thumbnail_overlay").addClass("show");
 }
 
-function hideThumbnail() {
-	$("#thumbnail").hide();
+function hideLargeThumbnail() {
+	$("#large_thumbnail_overlay").removeClass("show");
 }
 
-$(window).on("load", function () {
-		hideThumbnail();
+$(document).ready(function () {
 
 		let type = $("#type").val();
 		createOverlays(type);
 
 		// redraw on browser window size change
 		$(window).resize(function() {
+			// Clear manual scale override when window is resized
+			manualScaleRatio = null;
 			let type = $("#type").val();
 			createOverlays(type);
 		});
@@ -348,28 +417,80 @@ $(window).on("load", function () {
 
 		// toggle/all on/all off switches
 		$("#all_toggle").on("click", function () {
-			$("#labels input[type=checkbox]").each(function () {
-				$(this).prop("checked", !($(this).prop("checked") == true));
-				$(this).trigger("change");
-			});
+			for (let [id, monitor] of monitors) {
+				monitor["checked"] = !monitor["checked"];
+				monitors.set(id, monitor);
+				$(`#${id}`).prop("checked", monitor["checked"]);
+			}
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 
 		$("#all_off").on("click", function () {
-			$("#labels input[type=checkbox]").each(function () {
-				if ($(this).prop("checked")) {
-					$(this).prop("checked", false);
-					$(this).trigger("change");
+			for (let [id, monitor] of monitors) {
+				if (monitor["checked"]) {
+					monitor["checked"] = false;
+					monitors.set(id, monitor);
+					$(`#${id}`).prop("checked", false);
 				}
-			});
+			}
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 
 		$("#all_on").on("click", function () {
-			$("#labels input[type=checkbox]").each(function () {
-				if (!$(this).prop("checked")) {
-					$(this).prop("checked", true);
-					$(this).trigger("change");
+			for (let [id, monitor] of monitors) {
+				if (!monitor["checked"]) {
+					monitor["checked"] = true;
+					monitors.set(id, monitor);
+					$(`#${id}`).prop("checked", true);
 				}
-			});
+			}
+			let type = $("#type").val();
+			createOverlays(type);
+		});
+
+		// Manual scale control buttons
+		$("#scale_up").on("click", function () {
+			let currentRatio = getScaleRatio($("#type").val());
+			if (currentRatio >= 1) {
+				// Going from 1:X to 1:(X-1)
+				manualScaleRatio = Math.max(0.5, currentRatio - 1);
+			} else {
+				// Going from Y:1 to (Y+1):1 (smaller divider = more zoom)
+				manualScaleRatio = Math.max(0.5, currentRatio * 0.8);
+			}
+			let type = $("#type").val();
+			createOverlays(type);
+		});
+
+		$("#scale_down").on("click", function () {
+			let currentRatio = getScaleRatio($("#type").val());
+			if (currentRatio >= 1) {
+				// Going from 1:X to 1:(X+1)
+				manualScaleRatio = currentRatio + 1;
+			} else {
+				// Going from Y:1 to (Y-1):1 or crossing over to 1:X
+				let newRatio = currentRatio * 1.25;
+				manualScaleRatio = newRatio;
+			}
+			let type = $("#type").val();
+			createOverlays(type);
+		});
+
+		// Hide unchecked monitors toggle
+		$("#hide_unchecked").on("click", function () {
+			hideUncheckedMonitors = !hideUncheckedMonitors;
+			$(this).toggleClass("active", hideUncheckedMonitors);
+
+			if (hideUncheckedMonitors) {
+				$(this).attr("title", "Show all monitors in list").text("👁️‍🗨️");
+			} else {
+				$(this).attr("title", "Hide unchecked monitors from list").text("👁️");
+			}
+
+			let type = $("#type").val();
+			createOverlays(type);
 		});
 	}
 );

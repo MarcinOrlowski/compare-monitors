@@ -1,5 +1,10 @@
 # Changelog #
 
+* 2025-09-25
+    * Complete UI rewrite
+    * UI is now responsive
+    * Reworked application layout
+
 * 2025-01-20
     * Improved monitor label placement calculation
     * Code cleanup
