@@ -262,6 +262,8 @@ body {
 .large-thumbnail-content img {
 	width: 640px;
 	height: 640px;
+	min-width: 640px;
+	min-height: 640px;
 	object-fit: cover;
 	background-color: #f0f0f0;
 }
