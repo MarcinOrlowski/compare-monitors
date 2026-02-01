@@ -1,10 +1,12 @@
+![Compare monitors](img/logo.webp)
+
 # What is it? #
 
 This is bunch of JS scripts I wrote to help me decide what type of monitor I should get next.
 I was mostly concerned about screen dimensions as well as display resolution and all this is can be
 visually compared.
 
-![Example](img/screenshot.png)
+![Example](img/screenshot.webp)
 
 # Usage #
 
