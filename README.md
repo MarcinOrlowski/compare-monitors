@@ -55,6 +55,6 @@ you should be good.
 
 # License #
 
-* Written and copyrighted &copy;2020-2025 by Marcin Orlowski <mail (#) MarcinOrlowski (.) com>
+* Written and copyrighted &copy;2020-2026 by Marcin Orlowski <mail (#) MarcinOrlowski (.) com>
 * This application is open-sourced software licensed under
   the [MIT license](http://opensource.org/licenses/MIT)
